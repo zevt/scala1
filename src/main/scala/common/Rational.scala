@@ -6,8 +6,13 @@
 
 class Rational(n: Int, d: Int) {
   require(d != 0)
-  val numer: Int = n
-  val denom: Int = d
+  private val g = gcd(n.abs, d.abs)
+  val numer: Int = n / g
+  val denom: Int = d / g
+
+  private def gcd(a: Int, b: Int): Int = {
+    if (b == 0) a else gcd(b, a % b)
+  }
 
   override def toString = numer + "/" + denom
 
