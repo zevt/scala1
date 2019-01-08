@@ -24,5 +24,13 @@ object Func {
     f(a,b)
   }
 
+  /**
+    * Demonstrate function literal and function as parameter
+    */
+  def fLiteral01(i: Int, g: Int => Int): Int = {
+    g(i) * g(i)
+  }
+
+  def useFLiteral2(i: Int): Int = fLiteral01(i, _ + 1)
 
 }
