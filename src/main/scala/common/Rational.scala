@@ -1,11 +1,6 @@
 package common
 import scala.language.implicitConversions
 
-/**
-  * @author Viet Quoc Tran vt 
-  *         on 2019-01-03.
-  * www.zeroexception.com
-  */
 
 class Rational(n: Int, d: Int = 1) {
   require(d != 0)
