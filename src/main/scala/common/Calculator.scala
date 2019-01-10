@@ -1,6 +1,5 @@
 package common
 
-import scala.collection.mutable.MutableList
 import scala.collection.mutable.Stack
 
 /**
@@ -12,42 +11,56 @@ object Calculator {
       throw new IllegalArgumentException("Require one argument")
     } else {
       val expression = args(0)
-      val tokens = expression.split(" ")
-            
-      val stack = new Stack[Int]
-      for (token <- tokens) {
-        token match {
-          case "+" =>
-            val rhs = stack.pop()
-            val lhs = stack.pop()
-            stack.push(rhs + lhs)
-          case "-" =>
-            val rhs = stack.pop()
-            val lhs = stack.pop()
-            stack.push(lhs - rhs)
-          case "*" =>
-            val rhs = stack.pop()
-            val lhs = stack.pop()
-            stack.push(rhs * lhs)
-          case "/" =>
-            val rhs = stack.pop()
-            val lhs = stack.pop()
-            stack.push(lhs / rhs)
-          case _ => try {
-            stack.push(token.toInt)
-          } catch {
-            case _: NumberFormatException => throw new IllegalArgumentException("Invalid Token: " + token)
-          }
-        }
-      }
-      println(stack.head)
-
+      println(calculate(expression))
     }
 
-
   }
 
-  def handleNumber(token: String, stack: List[Int]): Boolean = {
-    true
+  def calculate(expression: String): Int = {
+    val stack = new Stack[Int]
+    val tokens = expression.split(" ")
+    for (token <- tokens) {
+      if (!handleOperator(token, stack) && !handleNumber(token, stack)) {
+        throw new IllegalArgumentException("Invalid token: " + token)
+      }
+    }
+    stack.pop()
   }
+
+
+  def handleNumber(token: String, stack: Stack[Int]): Boolean = {
+    try {
+      stack.push(token.toInt)
+      true
+    } catch {
+      case _: NumberFormatException => false
+    }
+  }
+
+  def handleOperator(token: String, stack: Stack[Int]): Boolean = {
+    token match {
+      case "+" =>
+        val rhs = stack.pop()
+        val lhs = stack.pop()
+        stack.push(rhs + lhs)
+        true
+      case "-" =>
+        val rhs = stack.pop()
+        val lhs = stack.pop()
+        stack.push(lhs - rhs)
+        true
+      case "*" =>
+        val rhs = stack.pop()
+        val lhs = stack.pop()
+        stack.push(rhs * lhs)
+        true
+      case "/" =>
+        val rhs = stack.pop()
+        val lhs = stack.pop()
+        stack.push(lhs / rhs)
+        true
+      case _ => false
+    }
+  }
+
 }
