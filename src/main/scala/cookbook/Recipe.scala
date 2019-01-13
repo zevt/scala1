@@ -14,5 +14,5 @@ package cookbook
 //    Some(recipe.ingredients, recipe.directions)
 //}
 
-case class Recipe(ingredients: List[String] = List.empty,
-                  directions: List[String] = List.empty)
+case class Recipe(private val ingredients: List[String] = List.empty,
+                  private val directions: List[String] = List.empty)

@@ -27,7 +27,6 @@ object Calculator {
     stack.pop()
   }
 
-
   def handleNumber(token: String, stack: Stack[Int]): Boolean = {
     try {
       stack.push(token.toInt)
