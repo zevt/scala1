@@ -33,6 +33,10 @@ trait Measured {
   override def toString: String = amount + s"($symbol)"
 }
 
+trait Conflict {
+  override def toString: String = "conflict?"
+}
+
 sealed abstract class Mass2 extends Ordered[Mass2] with Measured {
   def toGrams: Gram2
   override def compare(that: Mass2): Int = (this.toGrams.amount - that.toGrams.amount).toInt
